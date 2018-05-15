@@ -8,4 +8,12 @@ public class SearchResult {
     private int totalItems;
     @SerializedName("items")
     private List<Book> books;
+
+    public int getTotalItems() {
+        return totalItems;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
 }

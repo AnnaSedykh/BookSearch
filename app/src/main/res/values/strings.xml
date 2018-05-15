@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Book Search</string>
     <string name="enter_book_info">Enter book info</string>
+    <string name="title_activity_result">ResultActivity</string>
 </resources>

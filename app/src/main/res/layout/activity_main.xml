@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="200dp"
         android:layout_marginStart="@dimen/offset_big"
         android:layout_marginEnd="@dimen/offset_big"
         app:cardElevation="6dp">
