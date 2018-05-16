@@ -2,7 +2,6 @@ package com.annasedykh.booksearch;
 
 import android.app.Application;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
@@ -10,6 +9,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * {@link App} configures Retrofit2 and creates {@link SearchApi} instance.
+ */
 public class App extends Application {
 
     private SearchApi api;

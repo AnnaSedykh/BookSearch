@@ -16,23 +16,36 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@link BooksAdapter} displays a scrolling list of {@link Book} objects using RecyclerView.
+ */
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
 
     private static final String THUMBNAIL_URI_KEY = "smallThumbnail";
     private List<Book> data = new ArrayList<>();
 
+
+    /**
+     * Create new views (invoked by the layout manager)
+     */
     @Override
     public BooksAdapter.BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book, parent, false);
         return new BookViewHolder(view);
     }
 
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
+     */
     @Override
     public void onBindViewHolder(BooksAdapter.BookViewHolder holder, int position) {
         Book book = data.get(position);
         holder.bind(book, position);
     }
 
+    /**
+     * Return the size of book's dataset (invoked by the layout manager)
+     */
     @Override
     public int getItemCount() {
         return data.size();
@@ -47,6 +60,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return data;
     }
 
+    /**
+     * {@link BookViewHolder} provide a reference to the views for each book
+     */
     static class BookViewHolder extends RecyclerView.ViewHolder {
         private final ImageView thumbnail;
         private final TextView title;
@@ -55,6 +71,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         private String infoLink;
         private Context context;
 
+        /**
+         * {@link BookViewHolder} constructor
+         */
         public BookViewHolder(View itemView) {
             super(itemView);
             thumbnail = itemView.findViewById(R.id.thumbnail);
@@ -64,15 +83,18 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             context = itemView.getContext();
         }
 
+        /**
+         * Binds view with book info
+         */
         public void bind(final Book book, final int position) {
             Book.BookInfo info = book.getInfo();
             if (info != null) {
                 title.setText(info.getTitle());
-                if(info.getAuthors() != null){
-                authors.setText(TextUtils.join(", ",info.getAuthors()));
+                if (info.getAuthors() != null) {
+                    authors.setText(TextUtils.join(", ", info.getAuthors()));
                 }
                 description.setText(info.getDescription());
-                if(info.getImageLinks() != null){
+                if (info.getImageLinks() != null) {
                     String path = info.getImageLinks().get(THUMBNAIL_URI_KEY);
 
                     Picasso.get()
@@ -86,10 +108,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   if(!infoLink.isEmpty()){
-                       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(infoLink));
-                       context.startActivity(browserIntent);
-                   }
+                    if (!infoLink.isEmpty()) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(infoLink));
+                        context.startActivity(browserIntent);
+                    }
                 }
             });
         }

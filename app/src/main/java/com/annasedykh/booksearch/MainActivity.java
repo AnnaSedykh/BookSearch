@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * {@link MainActivity} - search activity
+ */
 public class MainActivity extends AppCompatActivity {
     public static final String QUERY = "query";
 
