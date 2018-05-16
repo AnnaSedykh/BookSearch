@@ -15,6 +15,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * {@link ResultActivity} displays search result
+ */
 public class ResultActivity extends AppCompatActivity {
     private static final String TAG = "ResultActivity";
 
@@ -78,8 +81,12 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Query the Google Books API dataset and return a list of {@link Book} objects.
+     */
     private void loadData() {
         Call<SearchResult> call = api.searchBooks(queryString, MAX_RESULT);
+        //Call is executed asynchronously
         call.enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
@@ -100,6 +107,9 @@ public class ResultActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Shows special layout if not found any books on request
+     */
     private void showResultNotFound() {
         setContentView(R.layout.result_not_found);
         notFoundView = findViewById(R.id.result_not_found);

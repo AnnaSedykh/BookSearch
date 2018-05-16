@@ -5,9 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@link Book} is a book model class.
+ * Contains information related to a single book.
+ */
 public class Book {
 
+    /** Book id */
     private String id;
+    /** Book info */
     @SerializedName("volumeInfo")
     private BookInfo info;
 
@@ -27,12 +33,20 @@ public class Book {
         this.info = info;
     }
 
+    /**
+     * {@link BookInfo} contains book information.
+     */
     class BookInfo{
 
+        /** Book title */
         private String title;
+        /** Book authors */
         private List<String> authors;
+        /** Book description */
         private String description;
+        /** URL to view information */
         private String infoLink;
+        /** A list of book's image links */
         private Map<String, String> imageLinks;
 
 
