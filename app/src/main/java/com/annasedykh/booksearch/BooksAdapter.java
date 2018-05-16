@@ -74,7 +74,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 description.setText(info.getDescription());
                 if(info.getImageLinks() != null){
                     String path = info.getImageLinks().get(THUMBNAIL_URI_KEY);
-                    Picasso.get().load(path).into(thumbnail);
+
+                    Picasso.get()
+                            .load(path)
+                            .centerCrop()
+                            .fit()
+                            .into(thumbnail);
                 }
                 infoLink = info.getInfoLink();
             }
