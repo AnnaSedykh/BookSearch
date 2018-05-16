@@ -1,46 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_book_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="@dimen/text_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view_search_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="200dp"
-        android:layout_marginStart="@dimen/offset_big"
         android:layout_marginEnd="@dimen/offset_big"
-        app:cardElevation="6dp">
+        android:layout_marginStart="@dimen/offset_big"
+        android:layout_marginTop="45dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@android:color/white"
+            android:background="@color/colorAccent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/offset_big"
-            android:paddingEnd="@dimen/offset_normal">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/query_text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/enter_book_info"
+                android:background="@android:color/white"
+                android:hint="@string/enter_book_keywords"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:paddingEnd="@dimen/offset_big"
+                android:paddingStart="@dimen/offset_normal" />
 
             <Button
                 android:id="@+id/search_btn"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/ic_search"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/offset_normal"
+                android:background="@drawable/ic_search" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

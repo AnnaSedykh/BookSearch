@@ -25,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String queryString = queryText.getText().toString();
-
                 Intent resultIntent = new Intent(MainActivity.this, ResultActivity.class);
                 resultIntent.putExtra("query", queryString);
                 startActivity(resultIntent);
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        queryText.setText("");
     }
 }

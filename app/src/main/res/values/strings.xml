@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Book Search</string>
-    <string name="enter_book_info">Enter book info</string>
-    <string name="title_activity_result">ResultActivity</string>
+    <string name="enter_book_keywords">Enter book keywords</string>
+    <string name="title_activity_result">Search result</string>
+
+    <string name="test_title">War and Peace</string>
+    <string name="test_author">Leo Tolstoy</string>
+    <string name="test_description">War and Peace by Leo Tolstoy from Coterie Classics All Coterie Classics have been formatted for ereaders and devices and include a bonus link to the free audio book.
+        “If everyone fought for their own convictions there would be no war.” ― Leo Tolstoy, War and Peace War and Peace is an epic novel by Leo Tolstoy
+        that explores the lives on individuals during the time of international conflict.",</string>
+
+    <string name="result_not_found">"Not found any books on request: %s</string>
+    <string name="recommend">"
+Recommendations:
+
+* Make sure all words are spelled correctly.
+* Try to use different keywords.
+* Try using more popular keywords."</string>
 </resources>
