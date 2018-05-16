@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_item"
     android:layout_width="match_parent"
-    android:layout_height="125dp"
+    android:layout_height="124dp"
     android:layout_gravity="top"
     android:layout_marginBottom="@dimen/offset_small"
     android:layout_marginLeft="@dimen/offset_normal"
@@ -20,9 +20,10 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="75dp"
-            android:layout_height="123dp"
-            android:src="@drawable/thumbnail" />
+            android:layout_width="84dp"
+            android:layout_height="124dp"
+
+            tools:src="@drawable/ic_book" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,22 +36,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_title"
-                tools:text="Война и мир" />
+                tools:text="@string/test_title" />
 
             <TextView
                 android:id="@+id/authors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:paddingTop="@dimen/offset_small"
-                tools:text="Лев Толстой" />
+                android:textSize="@dimen/text_author"
+                tools:text="@string/test_author" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/offset_small"
-                tools:text="«Война и мир» — произведениеодного из величайших писателей мира, русского прозаика и мыслителя Л. Н. Толстого (1828–1910).*** Это масштабный роман-эпопея, в котором автор с непревзойденным мастерством описывает русское общество в эпоху войны с Наполеоном (1805 — 1812). В романе множество сюжетных линий, разнообразие героев, которые находятся в поиске правды и добра. После «Войны и мира» он получил широкое распространение в русской и мировой литературе. Произведение является обязательной частью школьной программы Толстой известен как автор и других замечательных произведений: «Живой труп», «Моя жизнь», «Смерть Ивана Ильича», «Хаджи-Мурат», «Рассказы для детей». Творчество Льва Толстого оказало огромное влияние на развитие не только русской, но и мировой литературы. Его произведения отличаются глубокой " />
+                android:textSize="@dimen/text_description"
+                tools:text="@string/test_description" />
 
         </LinearLayout>
     </LinearLayout>

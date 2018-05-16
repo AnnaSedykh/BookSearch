@@ -2,13 +2,14 @@ package com.annasedykh.booksearch;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +25,8 @@ public class ResultActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private RecyclerView recycler;
     private BooksAdapter adapter;
+    private TextView notFoundView;
+    private TextView recommend;
     private String queryString;
 
     @Override
@@ -34,8 +37,7 @@ public class ResultActivity extends AppCompatActivity {
         App app = (App) getApplication();
         api = app.getApi();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
 
         queryString = getIntent().getStringExtra(MainActivity.QUERY);
 
@@ -44,26 +46,51 @@ public class ResultActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(adapter);
 
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        fab.show();
+                        break;
+                    default:
+                        fab.hide();
+                        break;
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                recycler.smoothScrollToPosition(0);
             }
         });
 
         loadData();
     }
 
-    private void loadData(){
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void loadData() {
         Call<SearchResult> call = api.searchBooks(queryString, MAX_RESULT);
         call.enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
                 Log.i(TAG, "search onResponse: ");
                 SearchResult result = response.body();
-                adapter.setData(result.getBooks());
+                if (result != null && result.getTotalItems() > 0) {
+                    adapter.setData(result.getBooks());
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                } else {
+                    showResultNotFound();
+                }
             }
 
             @Override
@@ -71,7 +98,24 @@ public class ResultActivity extends AppCompatActivity {
                 Log.w(TAG, "search onFailure: ", t);
             }
         });
+    }
 
+    private void showResultNotFound() {
+        setContentView(R.layout.result_not_found);
+        notFoundView = findViewById(R.id.result_not_found);
+        notFoundView.setText(getString(R.string.result_not_found, queryString));
+        recommend = findViewById(R.id.recommend);
+        recommend.setText(getString(R.string.recommend));
+        setToolbar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
