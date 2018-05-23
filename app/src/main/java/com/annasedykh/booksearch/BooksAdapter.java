@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * {@link BooksAdapter} displays a scrolling list of {@link Book} objects using RecyclerView.
  */
@@ -64,10 +67,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
      * {@link BookViewHolder} provide a reference to the views for each book
      */
     static class BookViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView thumbnail;
-        private final TextView title;
-        private final TextView authors;
-        private final TextView description;
+        @BindView(R.id.thumbnail) ImageView thumbnail;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.authors) TextView authors;
+        @BindView(R.id.description) TextView description;
         private String infoLink;
         private Context context;
 
@@ -76,10 +79,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
          */
         public BookViewHolder(View itemView) {
             super(itemView);
-            thumbnail = itemView.findViewById(R.id.thumbnail);
-            title = itemView.findViewById(R.id.title);
-            authors = itemView.findViewById(R.id.authors);
-            description = itemView.findViewById(R.id.description);
+            ButterKnife.bind(this, itemView);
             context = itemView.getContext();
         }
 

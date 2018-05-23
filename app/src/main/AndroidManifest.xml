@@ -22,6 +22,8 @@
             android:name=".ResultActivity"
             android:label="@string/title_activity_result"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".ResultNotFoundActivity"
+            android:label="@string/title_activity_result"/>
     </application>
 
 </manifest>
