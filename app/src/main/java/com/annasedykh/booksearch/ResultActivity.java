@@ -1,5 +1,6 @@
 package com.annasedykh.booksearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,30 +26,35 @@ public class ResultActivity extends AppCompatActivity {
     private static final String TAG = "ResultActivity";
 
     private static final int MAX_RESULT = 40;
+    private static final int CODE_RESULT_NOT_FOUND = 1;
 
     private SearchApi api;
-
-    private FloatingActionButton fab;
-    private RecyclerView recycler;
     private BooksAdapter adapter;
-    private TextView notFoundView;
-    private TextView recommend;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.recycler_view)
+    RecyclerView recycler;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private String queryString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        ButterKnife.bind(this);
 
         App app = (App) getApplication();
         api = app.getApi();
 
         setToolbar();
+        fab.hide();
 
         queryString = getIntent().getStringExtra(MainActivity.QUERY);
-
         adapter = new BooksAdapter();
-        recycler = findViewById(R.id.recycler_view);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(adapter);
 
@@ -54,7 +63,9 @@ public class ResultActivity extends AppCompatActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
-                        fab.show();
+                        if (recyclerView.computeVerticalScrollOffset() != 0) {
+                            fab.show();
+                        }
                         break;
                     default:
                         fab.hide();
@@ -64,19 +75,15 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recycler.smoothScrollToPosition(0);
-            }
-        });
-
         loadData();
     }
 
+    @OnClick(R.id.fab)
+    void smoothScroll() {
+        recycler.smoothScrollToPosition(0);
+    }
+
     private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -94,9 +101,11 @@ public class ResultActivity extends AppCompatActivity {
                 SearchResult result = response.body();
                 if (result != null && result.getTotalItems() > 0) {
                     adapter.setData(result.getBooks());
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 } else {
-                    showResultNotFound();
+                    Intent notFoundIntent = new Intent(ResultActivity.this, ResultNotFoundActivity.class);
+                    notFoundIntent.putExtra(MainActivity.QUERY, queryString);
+                    startActivityForResult(notFoundIntent, CODE_RESULT_NOT_FOUND);
                 }
             }
 
@@ -107,16 +116,15 @@ public class ResultActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Shows special layout if not found any books on request
-     */
-    private void showResultNotFound() {
-        setContentView(R.layout.result_not_found);
-        notFoundView = findViewById(R.id.result_not_found);
-        notFoundView.setText(getString(R.string.result_not_found, queryString));
-        recommend = findViewById(R.id.recommend);
-        recommend.setText(getString(R.string.recommend));
-        setToolbar();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CODE_RESULT_NOT_FOUND:
+                if (resultCode == RESULT_OK) {
+                    finish();
+                }
+        }
     }
 
     @Override

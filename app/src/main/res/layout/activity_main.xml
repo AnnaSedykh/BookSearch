@@ -55,7 +55,8 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/offset_big"
-                android:paddingStart="@dimen/offset_normal" />
+                android:paddingStart="@dimen/offset_normal"
+                android:saveEnabled="false"/>
 
             <Button
                 android:id="@+id/search_btn"
